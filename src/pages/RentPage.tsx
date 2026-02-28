@@ -40,14 +40,14 @@ const RentPage = () => {
 
   return (
     <DashboardLayout>
-      <div className="space-y-6">
+      <div className="space-y-8">
         <div>
-          <h1 className="text-2xl font-bold">Rent Management</h1>
+          <h1 className="text-2xl font-semibold text-foreground">Rent Management</h1>
           <p className="text-muted-foreground">Track and manage monthly rent payments</p>
         </div>
 
         {/* Summary cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           {[
             {
               label: "Total Expected",
@@ -68,24 +68,24 @@ const RentPage = () => {
               variant: "destructive" as const,
             },
           ].map((item) => (
-            <Card key={item.label} className="shadow-card">
-              <CardContent className="p-5">
-                <p className="text-sm text-muted-foreground">{item.label}</p>
-                <p className="text-2xl font-bold mt-1">{item.value}</p>
+            <Card key={item.label} className="border border-border bg-card">
+              <CardContent className="p-6">
+                <p className="text-sm font-medium text-muted-foreground">{item.label}</p>
+                <p className="text-2xl font-semibold text-foreground mt-1">{item.value}</p>
               </CardContent>
             </Card>
           ))}
         </div>
 
-        <Card className="shadow-card">
-          <CardHeader className="pb-3">
+        <Card className="border border-border bg-card">
+          <CardHeader className="pb-4">
             <div className="relative max-w-sm">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 placeholder="Search residents..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="pl-9"
+                className="pl-9 h-9"
               />
             </div>
           </CardHeader>

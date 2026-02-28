@@ -15,11 +15,30 @@ import {
 } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { Calendar, ChevronLeft, ChevronRight, DollarSign, UtensilsCrossed } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Calendar, ChevronLeft, ChevronRight, DollarSign, UtensilsCrossed, Plus, UserPlus } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const MealsPage = () => {
   const [selectedDate, setSelectedDate] = useState("2026-02-27");
+  const [guestDialogOpen, setGuestDialogOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState("");
+  const [guestMeals, setGuestMeals] = useState({ breakfast: 0, lunch: 0, dinner: 0 });
   const { toast } = useToast();
   const residents = mockUsers.filter((u) => u.role === "user" || u.role === "meal_manager" || u.role === "manager");
 
@@ -37,20 +56,142 @@ const MealsPage = () => {
     toast({ title: "Meals saved", description: `Meal entries for ${selectedDate} have been updated.` });
   };
 
+  const handleAddGuestMeals = () => {
+    if (!selectedUser) {
+      toast({ title: "Error", description: "Please select a user", variant: "destructive" });
+      return;
+    }
+    
+    const totalGuestMeals = guestMeals.breakfast + guestMeals.lunch + guestMeals.dinner;
+    if (totalGuestMeals === 0) {
+      toast({ title: "Error", description: "Please add at least one guest meal", variant: "destructive" });
+      return;
+    }
+
+    toast({ 
+      title: "Guest meals added", 
+      description: `Added ${totalGuestMeals} guest meal(s) for ${mockUsers.find(u => u.id === selectedUser)?.name}` 
+    });
+    
+    // Reset form
+    setSelectedUser("");
+    setGuestMeals({ breakfast: 0, lunch: 0, dinner: 0 });
+    setGuestDialogOpen(false);
+  };
+
   return (
     <DashboardLayout>
-      <div className="space-y-6">
+      <div className="space-y-8">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold">Meal Management</h1>
+            <h1 className="text-2xl font-semibold text-foreground">Meal Management</h1>
             <p className="text-muted-foreground">Track daily meals for all residents</p>
           </div>
-          <Card className="shadow-card px-4 py-3">
-            <div className="flex items-center gap-1 text-sm text-muted-foreground">
-              <DollarSign className="h-4 w-4" />
-              Meal Rate: <span className="font-semibold text-foreground">৳{mockMealRate.ratePerMeal}/meal</span>
-            </div>
-          </Card>
+          <div className="flex items-center gap-3">
+            <Dialog open={guestDialogOpen} onOpenChange={setGuestDialogOpen}>
+              <DialogTrigger asChild>
+                <Button variant="outline" className="h-9">
+                  <UserPlus className="h-4 w-4 mr-2" />
+                  Add Guest Meals
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Add Guest Meals</DialogTitle>
+                  <DialogDescription>
+                    Add extra meals for guests visiting residents on {selectedDate}
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="space-y-4 py-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="user">Select Resident</Label>
+                    <Select value={selectedUser} onValueChange={setSelectedUser}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Choose a resident" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {residents.map((user) => (
+                          <SelectItem key={user.id} value={user.id}>
+                            {user.name} - Room {user.roomNumber}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  
+                  <div className="space-y-3">
+                    <Label>Number of Guest Meals</Label>
+                    {(["breakfast", "lunch", "dinner"] as const).map((meal) => (
+                      <div key={meal} className="flex items-center justify-between">
+                        <Label htmlFor={meal} className="capitalize">{meal}</Label>
+                        <div className="flex items-center gap-2">
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() => setGuestMeals(prev => ({ 
+                              ...prev, 
+                              [meal]: Math.max(0, prev[meal] - 1) 
+                            }))}
+                            disabled={guestMeals[meal] === 0}
+                          >
+                            -
+                          </Button>
+                          <Input
+                            id={meal}
+                            type="number"
+                            min="0"
+                            max="10"
+                            value={guestMeals[meal]}
+                            onChange={(e) => setGuestMeals(prev => ({ 
+                              ...prev, 
+                              [meal]: Math.max(0, Math.min(10, parseInt(e.target.value) || 0)) 
+                            }))}
+                            className="w-16 text-center"
+                          />
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() => setGuestMeals(prev => ({ 
+                              ...prev, 
+                              [meal]: Math.min(10, prev[meal] + 1) 
+                            }))}
+                            disabled={guestMeals[meal] === 10}
+                          >
+                            +
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <div className="pt-2 border-t">
+                    <div className="flex justify-between items-center">
+                      <span className="font-medium">Total Guest Meals:</span>
+                      <span className="font-bold text-primary">
+                        {guestMeals.breakfast + guestMeals.lunch + guestMeals.dinner}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <DialogFooter>
+                  <Button variant="outline" onClick={() => setGuestDialogOpen(false)}>
+                    Cancel
+                  </Button>
+                  <Button onClick={handleAddGuestMeals}>
+                    Add Guest Meals
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+            <Card className="border border-border bg-card px-4 py-3">
+              <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                <DollarSign className="h-4 w-4" />
+                Meal Rate: <span className="font-semibold text-foreground">৳{mockMealRate.ratePerMeal}/meal</span>
+              </div>
+            </Card>
+          </div>
         </div>
 
         {/* Date nav */}
@@ -76,7 +217,7 @@ const MealsPage = () => {
           </Badge>
         </div>
 
-        <Card className="shadow-card">
+        <Card className="border border-border bg-card">
           <CardContent className="p-0">
             <Table>
               <TableHeader>

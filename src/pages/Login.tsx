@@ -37,99 +37,100 @@ const Login = () => {
   ];
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen flex bg-background">
       {/* Left panel */}
-      <div className="hidden lg:flex lg:w-1/2 gradient-hero items-center justify-center p-12 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-20 left-20 h-64 w-64 rounded-full bg-accent blur-3xl" />
-          <div className="absolute bottom-20 right-20 h-48 w-48 rounded-full bg-accent blur-3xl" />
-        </div>
-        <div className="relative z-10 text-center max-w-md">
-          <div className="mx-auto mb-8 flex h-16 w-16 items-center justify-center rounded-2xl bg-accent shadow-prominent">
-            <Building2 className="h-8 w-8 text-accent-foreground" />
+      <div className="hidden lg:flex lg:w-1/2 bg-muted/30 items-center justify-center p-12">
+        <div className="text-center max-w-md">
+          <div className="mx-auto mb-8 flex h-12 w-12 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+            <Building2 className="h-6 w-6" />
           </div>
-          <h1 className="text-3xl font-bold text-primary-foreground mb-4">HostelHub</h1>
-          <p className="text-primary-foreground/70 text-lg leading-relaxed">
+          <h1 className="text-2xl font-semibold text-foreground mb-4">HostelHub</h1>
+          <p className="text-muted-foreground text-sm leading-relaxed">
             Complete hostel management — residents, meals, rent & finances — all in one place.
           </p>
         </div>
       </div>
 
       {/* Right panel */}
-      <div className="flex-1 flex items-center justify-center p-6 bg-background">
-        <div className="w-full max-w-sm">
+      <div className="flex-1 flex items-center justify-center p-8 bg-background">
+        <div className="w-full max-w-md">
           <div className="lg:hidden flex items-center gap-3 mb-8 justify-center">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary">
-              <Building2 className="h-5 w-5 text-primary-foreground" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+              <Building2 className="h-5 w-5" />
             </div>
-            <span className="text-xl font-bold">HostelHub</span>
+            <span className="text-lg font-semibold">HostelHub</span>
           </div>
 
-          <Card className="shadow-elevated border-0">
-            <CardHeader className="space-y-1 pb-4">
-              <CardTitle className="text-xl">Sign in</CardTitle>
-              <CardDescription>Enter your credentials to access the dashboard</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="you@hostel.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="password">Password</Label>
-                  <div className="relative">
-                    <Input
-                      id="password"
-                      type={showPassword ? "text" : "password"}
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                    />
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="icon"
-                      className="absolute right-0 top-0 h-full px-3 text-muted-foreground hover:text-foreground"
-                      onClick={() => setShowPassword(!showPassword)}
-                    >
-                      {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                    </Button>
-                  </div>
-                </div>
-                <Button type="submit" className="w-full" disabled={loading}>
-                  {loading ? "Signing in..." : "Sign in"}
-                </Button>
-              </form>
+          <div className="space-y-6">
+            <div>
+              <h2 className="text-xl font-semibold text-foreground">Sign in</h2>
+              <p className="text-sm text-muted-foreground mt-1">Enter your credentials to access the dashboard</p>
+            </div>
 
-              <div className="mt-6">
-                <p className="text-xs text-muted-foreground mb-2 text-center">Quick login as:</p>
-                <div className="grid grid-cols-2 gap-2">
-                  {demoAccounts.map((acc) => (
-                    <Button
-                      key={acc.email}
-                      variant="outline"
-                      size="sm"
-                      className="text-xs h-8"
-                      onClick={() => {
-                        setEmail(acc.email);
-                        setPassword("password");
-                      }}
-                    >
-                      {acc.label}
-                    </Button>
-                  ))}
-                </div>
+            <Card className="border border-border">
+              <CardContent className="p-6">
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div className="space-y-2">
+                    <Label htmlFor="email" className="text-sm font-medium">Email</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="you@hostel.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      className="h-10"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="password" className="text-sm font-medium">Password</Label>
+                    <div className="relative">
+                      <Input
+                        id="password"
+                        type={showPassword ? "text" : "password"}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                        className="h-10 pr-10"
+                      />
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon"
+                        className="absolute right-0 top-0 h-full w-10 text-muted-foreground hover:text-foreground"
+                        onClick={() => setShowPassword(!showPassword)}
+                      >
+                        {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                      </Button>
+                    </div>
+                  </div>
+                  <Button type="submit" className="w-full h-10" disabled={loading}>
+                    {loading ? "Signing in..." : "Sign in"}
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
+
+            <div className="text-center">
+              <p className="text-xs text-muted-foreground mb-3">Quick login as:</p>
+              <div className="grid grid-cols-2 gap-2">
+                {demoAccounts.map((acc) => (
+                  <Button
+                    key={acc.email}
+                    variant="outline"
+                    size="sm"
+                    className="text-xs h-8 border-border hover:bg-muted"
+                    onClick={() => {
+                      setEmail(acc.email);
+                      setPassword("password");
+                    }}
+                  >
+                    {acc.label}
+                  </Button>
+                ))}
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
       </div>
     </div>

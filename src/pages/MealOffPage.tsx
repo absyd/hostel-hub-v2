@@ -86,18 +86,16 @@ const MealOffPage = () => {
 
   return (
     <DashboardLayout>
-      <div className="space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
-            <h1 className="text-2xl font-bold">Meal Off Requests</h1>
-            <p className="text-muted-foreground">
-              {isUser ? "Request to turn off your meals for the next day" : "Review meal off requests from residents"}
-            </p>
-          </div>
-          {(isUser || user.role === "manager") && (
+      <div className="space-y-8">
+        <div>
+          <h1 className="text-2xl font-semibold text-foreground">Meal Off Requests</h1>
+          <p className="text-muted-foreground">
+            {isReviewer ? "Review and manage meal exemption requests" : "Request meal exemptions for upcoming dates"}
+          </p>
+          {isUser && (
             <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
               <DialogTrigger asChild>
-                <Button disabled={alreadyRequested}>
+                <Button className="mt-4 h-9">
                   <Plus className="h-4 w-4 mr-2" />
                   Request Meal Off
                 </Button>
@@ -143,14 +141,14 @@ const MealOffPage = () => {
 
         {/* Pending reviews for reviewers */}
         {isReviewer && pendingReviews.length > 0 && (
-          <Card className="shadow-card border-warning/30">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-base flex items-center gap-2">
+          <Card className="border border-border bg-card border-warning/30">
+            <CardHeader className="pb-4">
+              <CardTitle className="text-base font-medium flex items-center gap-2">
                 <CalendarOff className="h-4 w-4" />
                 Pending Reviews
                 <Badge variant="secondary">{pendingReviews.length}</Badge>
               </CardTitle>
-              <CardDescription>These requests need your approval</CardDescription>
+              <CardDescription className="text-sm">These requests need your approval</CardDescription>
             </CardHeader>
             <CardContent className="p-0">
               <Table>
@@ -193,9 +191,9 @@ const MealOffPage = () => {
         )}
 
         {/* All requests */}
-        <Card className="shadow-card">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-base">{isReviewer ? "All Requests" : "My Requests"}</CardTitle>
+        <Card className="border border-border bg-card">
+          <CardHeader className="pb-4">
+            <CardTitle className="text-base font-medium">{isReviewer ? "All Requests" : "My Requests"}</CardTitle>
           </CardHeader>
           <CardContent className="p-0">
             <Table>

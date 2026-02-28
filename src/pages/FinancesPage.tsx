@@ -27,41 +27,41 @@ const FinancesPage = () => {
 
   return (
     <DashboardLayout>
-      <div className="space-y-6">
+      <div className="space-y-8">
         <div>
-          <h1 className="text-2xl font-bold">Financial Summary</h1>
+          <h1 className="text-2xl font-semibold text-foreground">Financial Summary</h1>
           <p className="text-muted-foreground">
             {isResident ? "Your monthly financial overview" : "Overview for February 2026"}
           </p>
         </div>
 
         {!isResident && (
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <Card className="shadow-card">
-              <CardContent className="p-5">
-                <p className="text-sm text-muted-foreground">Total Due</p>
-                <p className="text-2xl font-bold mt-1">৳{totalDue.toLocaleString()}</p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <Card className="border border-border bg-card">
+              <CardContent className="p-6">
+                <p className="text-sm font-medium text-muted-foreground">Total Due</p>
+                <p className="text-2xl font-semibold text-foreground mt-1">৳{totalDue.toLocaleString()}</p>
               </CardContent>
             </Card>
-            <Card className="shadow-card">
-              <CardContent className="p-5">
-                <p className="text-sm text-muted-foreground">Total Paid</p>
-                <p className="text-2xl font-bold mt-1 text-success">৳{totalPaid.toLocaleString()}</p>
+            <Card className="border border-border bg-card">
+              <CardContent className="p-6">
+                <p className="text-sm font-medium text-muted-foreground">Total Paid</p>
+                <p className="text-2xl font-semibold text-success mt-1">৳{totalPaid.toLocaleString()}</p>
               </CardContent>
             </Card>
-            <Card className="shadow-card">
-              <CardContent className="p-5">
-                <p className="text-sm text-muted-foreground">Outstanding</p>
-                <p className="text-2xl font-bold mt-1 text-destructive">৳{totalBalance.toLocaleString()}</p>
+            <Card className="border border-border bg-card">
+              <CardContent className="p-6">
+                <p className="text-sm font-medium text-muted-foreground">Outstanding</p>
+                <p className="text-2xl font-semibold text-destructive mt-1">৳{totalBalance.toLocaleString()}</p>
               </CardContent>
             </Card>
           </div>
         )}
 
-        <Card className="shadow-card">
+        <Card className="border border-border bg-card">
           <CardHeader>
-            <CardTitle className="text-base">Monthly Breakdown</CardTitle>
-            <CardDescription>Meal rate: ৳{mockMealRate.ratePerMeal}/meal</CardDescription>
+            <CardTitle className="text-base font-medium">Monthly Breakdown</CardTitle>
+            <CardDescription className="text-sm">Meal rate: ৳{mockMealRate.ratePerMeal}/meal</CardDescription>
           </CardHeader>
           <CardContent className="p-0">
             <div className="overflow-x-auto">

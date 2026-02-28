@@ -53,15 +53,15 @@ const UsersPage = () => {
 
   return (
     <DashboardLayout>
-      <div className="space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div className="space-y-8">
+        <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold">User Management</h1>
+            <h1 className="text-2xl font-semibold text-foreground">Users</h1>
             <p className="text-muted-foreground">Manage hostel residents and staff</p>
           </div>
           <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
             <DialogTrigger asChild>
-              <Button>
+              <Button className="h-9">
                 <Plus className="h-4 w-4 mr-2" />
                 Add User
               </Button>
@@ -110,16 +110,16 @@ const UsersPage = () => {
           </Dialog>
         </div>
 
-        <Card className="shadow-card">
-          <CardHeader className="pb-3">
-            <div className="flex items-center gap-3">
+        <Card className="border border-border bg-card">
+          <CardHeader className="pb-4">
+            <div className="flex items-center justify-between">
               <div className="relative flex-1 max-w-sm">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
                   placeholder="Search users..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="pl-9"
+                  className="pl-10 h-9"
                 />
               </div>
               <Badge variant="secondary" className="shrink-0">{filteredUsers.length} users</Badge>
