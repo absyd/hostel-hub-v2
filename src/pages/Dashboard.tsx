@@ -190,7 +190,7 @@ function UserDashboard({ userId }: { userId: string }) {
                 <XAxis dataKey="date" tick={{ fontSize: 12 }} />
                 <YAxis tick={{ fontSize: 12 }} />
                 <Tooltip />
-                <Bar dataKey="total" fill="hsl(220 13% 3%)" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="total" fill="hsl(0 0% 0%)" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Building2, Users, UtensilsCrossed, DollarSign, ArrowRight, Sparkles } from "lucide-react";
+import { Building2, Users, UtensilsCrossed, DollarSign, ArrowRight, Sparkles, CheckCircle2, Clock, Award, Target } from "lucide-react";
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -10,41 +10,72 @@ const LandingPage = () => {
     {
       icon: Users,
       title: "User Management",
-      description: "Manage residents, staff, and roles with ease"
+      description: "Streamlined resident registration, role assignment, and profile management with secure access controls"
     },
     {
       icon: UtensilsCrossed,
       title: "Meal Tracking",
-      description: "Track daily meals and manage meal off requests"
+      description: "Intelligent meal monitoring, automated cost calculation, and dietary preference management"
     },
     {
       icon: DollarSign,
       title: "Financial Management",
-      description: "Handle rent payments and financial summaries"
+      description: "Automated rent collection, expense tracking, and comprehensive financial reporting"
+    }
+  ];
+
+  const stats = [
+    { label: "Hostels", value: "500+" },
+    { label: "Residents managed", value: "25k+" },
+    { label: "Monthly entries", value: "1.2M+" },
+    { label: "Satisfaction", value: "98%" },
+  ];
+
+  const benefits = [
+    {
+      icon: CheckCircle2,
+      title: "Efficient Operations",
+      description: "Reduce administrative workload by 60% with automated workflows"
+    },
+    {
+      icon: Clock,
+      title: "24/7 Availability",
+      description: "Round-the-clock access with real-time updates and notifications"
+    },
+    {
+      icon: Award,
+      title: "Proven Results",
+      description: "Trusted by 500+ hostels with 98% customer satisfaction rate"
+    },
+    {
+      icon: Target,
+      title: "Smart Analytics",
+      description: "Data-driven insights for optimized decision making and growth planning"
     }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
+    <div className="min-h-screen bg-[radial-gradient(1200px_circle_at_20%_10%,hsl(var(--primary)/0.12),transparent_55%),radial-gradient(900px_circle_at_80%_0%,hsl(262_83%_58%/0.10),transparent_50%)] bg-background">
       {/* Hero Section */}
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-primary/10"></div>
-        <div className="container mx-auto px-6 py-32 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-transparent to-transparent"></div>
+        <div className="absolute -top-24 left-1/2 h-80 w-[44rem] -translate-x-1/2 rounded-full bg-[conic-gradient(from_180deg_at_50%_50%,hsl(var(--primary)/0.25),hsl(262_83%_58%/0.25),hsl(38_92%_50%/0.18),hsl(var(--primary)/0.25))] blur-3xl"></div>
+        <div className="container mx-auto px-6 py-28 relative">
           <div className="text-center max-w-5xl mx-auto">
             <div className="flex justify-center mb-8">
-              <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-primary shadow-lg animate-pulse-glow">
+              <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary/80 shadow-lg animate-pulse-glow">
                 <Building2 className="h-10 w-10 text-primary-foreground" />
               </div>
             </div>
             <div className="flex items-center justify-center gap-2 mb-6">
               <Sparkles className="h-5 w-5 text-primary animate-float" />
-              <span className="text-sm font-medium text-primary">Modern Management Solution</span>
+              <span className="text-sm font-medium text-primary">Modern hostel operations, simplified</span>
               <Sparkles className="h-5 w-5 text-primary animate-float" style={{ animationDelay: "1s" }} />
             </div>
             <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
               HostelHub
               <span className="block text-3xl md:text-4xl font-light text-muted-foreground mt-2">
-                Management System
+                Hostel & Meal Management
               </span>
             </h1>
             <p className="text-xl text-muted-foreground mb-12 leading-relaxed max-w-3xl mx-auto">
@@ -54,7 +85,7 @@ const LandingPage = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
                 size="lg" 
-                className="h-14 px-8 text-base font-medium shadow-lg hover:shadow-xl transition-all duration-300 animate-float"
+                className="h-12 px-8 text-base font-medium shadow-lg hover:shadow-xl transition-all duration-300"
                 onClick={() => navigate("/login")}
               >
                 Get Started
@@ -63,11 +94,20 @@ const LandingPage = () => {
               <Button 
                 variant="outline" 
                 size="lg" 
-                className="h-14 px-8 text-base font-medium border-2 hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+                className="h-12 px-8 text-base font-medium border-2 hover:bg-primary hover:text-primary-foreground transition-all duration-300"
                 onClick={() => navigate("/login")}
               >
                 Sign In
               </Button>
+            </div>
+
+            <div className="mt-14 grid grid-cols-2 sm:grid-cols-4 gap-4">
+              {stats.map((s) => (
+                <div key={s.label} className="rounded-xl border border-border bg-card/70 backdrop-blur-sm px-4 py-4">
+                  <div className="text-2xl font-semibold text-foreground">{s.value}</div>
+                  <div className="text-xs text-muted-foreground mt-1">{s.label}</div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -102,6 +142,44 @@ const LandingPage = () => {
               </CardContent>
             </Card>
           ))}
+        </div>
+      </div>
+
+      <div className="container mx-auto px-6 pb-24">
+        <div className="rounded-2xl border border-border bg-gradient-to-r from-primary/10 via-primary/5 to-transparent p-8 md:p-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
+            <div>
+              <h3 className="text-2xl font-semibold text-foreground">Built for role-based clarity</h3>
+              <p className="text-muted-foreground mt-3 leading-relaxed">
+                Admin, Manager, Meal Manager, and Resident dashboards — each with the right tools, the right data, and the right access.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-2">
+                {["Role-based access", "Meal cost automation", "Rent tracking", "Monthly summaries"].map((pill) => (
+                  <span key={pill} className="rounded-full border border-border bg-background/60 px-3 py-1 text-xs text-muted-foreground">
+                    {pill}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {benefits.map((benefit) => (
+                <Card key={benefit.title} className="border border-border bg-card/70 backdrop-blur-sm">
+                  <CardHeader className="pb-3">
+                    <div className="flex items-center gap-3">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                        <benefit.icon className="h-5 w-5" />
+                      </div>
+                      <CardTitle className="text-base font-semibold">{benefit.title}</CardTitle>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="pt-0">
+                    <CardDescription className="text-sm leading-relaxed">{benefit.description}</CardDescription>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 
